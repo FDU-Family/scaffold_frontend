@@ -7,6 +7,9 @@
     "type-check": "vue-tsc --noEmit",
     "up": "npx taze major -I",
     "lint": "eslint .",
+    "lint-staged": "lint-staged",
+    "lint:script": "eslint --fix",
+    "prepare": "husky install",
     "test": "vitest",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "npx simple-git-hooks"
@@ -25,6 +28,11 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.7",
+    "@babel/core": "^7.22.9",
+    "@babel/eslint-parser": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7",
     "@dcloudio/types": "^3.3.3",
     "@dcloudio/uni-automator": "3.0.0-3080420230531001",
     "@dcloudio/uni-cli-shared": "3.0.0-3080420230531001",
@@ -35,11 +43,17 @@
     "@uni-helper/vite-plugin-uni-pages": "^0.2.3",
     "@unocss/eslint-config": "^0.53.5",
     "@vue-macros/reactivity-transform": "^0.3.13",
+    "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/test-utils": "^2.4.0",
     "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.9.0",
+    "husky": "^8.0.3",
     "lightningcss": "^1.21.5",
     "lint-staged": "^13.2.3",
     "postcss-px-to-viewport": "^1.1.1",
+    "prettier": "^2.8.4",
     "sass": "^1.63.6",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.1.6",
@@ -55,7 +69,13 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
+    "**/*.{js,jsx,tsx,ts,vue}": [
+      "pnpm run lint:script",
+      "git add ."
+    ],
+    "**/*.scss": [
+      "git add ."
+    ]
   },
   "eslintConfig": {
     "extends": [
